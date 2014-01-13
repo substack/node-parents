@@ -13,7 +13,10 @@ module.exports = function (cwd, opts) {
         var ps = [ x, y ].filter(function (p) {
             return p && typeof p === 'string'
         });
-        return path.normalize(ps.join(isWindows ? '\\' : '/'));
+        var res = path.normalize(ps.join(isWindows ? '\\' : '/'));
+        if (isWindows && /^[a-zA-Z]\:\.$/.test(res))
+            return res.replace(".", "");
+        return res;
     };
     
     var res = path.normalize(cwd)
@@ -27,7 +30,7 @@ module.exports = function (cwd, opts) {
     if (res[0] === res[1]) return [ res[0] ];
     if (isWindows && /^\\/.test(cwd)) {
         return res.slice(0,-1).map(function (d) {
-            return d.replace(/^\./, '');
+            return "\\" + d;
         });
     }
     return res;
