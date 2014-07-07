@@ -16,7 +16,7 @@ module.exports = function (cwd, opts) {
         if (isWindows && ps.length === 1 && ps[0].length === 2 && ps[0][1] === ":") {
             ps.push("");
         }
-        return path.normalize(ps.join(isWindows ? '\\' : '/'));
+        return path.normalize(ps.join(isWindows ? '\\' : '/').replace(/([a-zA-Z]):\\\\/, "$1:\\"));
     };
     
     var res = path.normalize(cwd)
