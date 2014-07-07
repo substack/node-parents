@@ -9,14 +9,14 @@ test('win32', function (t) {
         'C:\\Program Files\\Maxis\\Sim City 2000',
         'C:\\Program Files\\Maxis',
         'C:\\Program Files',
-        'C:',
+        'C:\\',
     ]);
     t.end();
 });
 
 test('win32 c:', function (t) {
     var dirs = parents('C:\\', { platform : 'win32' });
-    t.same(dirs, [ 'C:' ]);
+    t.same(dirs, [ 'C:\\' ]);
     t.end();
 });
 
