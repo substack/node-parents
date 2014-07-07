@@ -13,9 +13,9 @@ module.exports = function (cwd, opts) {
         var ps = [ x, y ].filter(function (p) {
             return p && typeof p === 'string'
         });
-		if (isWindows && ps.length === 1 && ps[0].length === 2 && ps[0][1] === ":") {
-			ps.push("");
-		}
+        if (isWindows && ps.length === 1 && ps[0].length === 2 && ps[0][1] === ":") {
+            ps.push("");
+        }
         return path.normalize(ps.join(isWindows ? '\\' : '/'));
     };
     
