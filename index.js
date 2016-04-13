@@ -32,7 +32,8 @@ module.exports = function (cwd, opts) {
     var res = normalize(cwd)
         .split(sep)
         .reduce(function (acc,dir,ix) {
-            return acc.concat(join(acc[ix], dir))
+            acc.push(join(acc[ix], dir))
+            return acc
         }, [init])
         .slice(1)
         .reverse()
