@@ -4,7 +4,7 @@ module.exports = function (cwd, opts) {
     if (cwd === undefined) cwd = process.cwd();
     if (!opts) opts = {};
     var platform = opts.platform || process.platform;
-    
+
     var isWindows = /^win/.test(platform);
     var path = isWindows ? pathPlatform.win32 : pathPlatform;
     var normalize = !isWindows ? path.normalize :
@@ -12,15 +12,23 @@ module.exports = function (cwd, opts) {
         path.normalize;
     var sep = isWindows ? /[\\\/]/ : '/';
     var init = isWindows ? '' : '/';
-    
-    var join = function (x, y) {
-        var ps = [ x, y ].filter(function (p) {
-            return p && typeof p === 'string'
-        });
+    var pathSep = isWindows ? '\\' : '/';
 
-        return normalize(ps.join(isWindows ? '\\' : '/'));
+    var join = function (x, y) {
+        var xStr = x && typeof x === 'string';
+        var yStr = y && typeof y === 'string';
+
+        if (xStr && yStr) {
+            return normalize(x + pathSep + y);
+        } else if (yStr) {
+            return normalize(y);
+        } else if (xStr) {
+            return normalize(x);
+        } else {
+            return '';
+        }
     };
-    
+
     var res = normalize(cwd)
         .split(sep)
         .reduce(function (acc,dir,ix) {
